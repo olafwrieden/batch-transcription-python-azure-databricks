@@ -1,4 +1,4 @@
-# Azure Batch Transcription using Python through Databricks
+# Azure Batch Transcription using Python in Databricks
 
 ## Outcome & Overview
 Referencing a Blob Storage (in Azure) containing voice recordings, we want to be able to call the [Speech to Text Cognitive Service](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) in Azure to transcribe the respective recordings in parallel (batch), and save the transcript into another Blob Storage container.
