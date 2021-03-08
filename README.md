@@ -5,9 +5,12 @@ Referencing a Blob Storage (in Azure) containing voice recordings, we want to be
 
 ## Setup
 
+![Azure Resources](https://i.imgur.com/juD5Z2g.png)
+
 __Navigate to Azure Portal and create the following services under a common Resource Group.__
 - Storage Account (with two Blob Storage containers named `recordings` and `transcriptions` for our input and output files respectively)
 - Cognitive Services (Speech Service)
+- Azure Databricks Service
 
 __Collect the following details:__
 1. Copy the `Subscription Key` and and `ServiceRegion (Location)` from your Speech Service's Keys and Endpoint tab.
