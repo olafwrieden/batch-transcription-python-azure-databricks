@@ -104,7 +104,95 @@ def _paginate(api, paginated_object):
                 f"could not receive paginated data: status {status}")
 ```
 
-__Note:__ If you want the transcription saved into the `transcription` container, you need to specify the `"destinationContainerUrl": "<SAS URI to transcriptions container>"` in the `properties = {}` object inside the `transcribe()` function.
+4. Create a fourth cell underneath the above, and paste the batch transcription function:
+```python
+def transcribe():
+    logging.info("Starting transcription client...")
+
+    # configure API key authorization: subscription_key
+    configuration = cris_client.Configuration()
+    configuration.api_key["Ocp-Apim-Subscription-Key"] = SUBSCRIPTION_KEY
+    configuration.host = f"https://{SERVICE_REGION}.api.cognitive.microsoft.com/speechtotext/v3.0"
+
+    # create the client object and authenticate
+    client = cris_client.ApiClient(configuration)
+
+    # create an instance of the transcription api class
+    api = cris_client.DefaultApi(api_client=client)
+
+    # Specify transcription properties by passing a dict to the properties parameter. See
+    # https://docs.microsoft.com/azure/cognitive-services/speech-service/batch-transcription#configuration-properties
+    # for supported parameters.
+    properties = {
+        "punctuationMode": "DictatedAndAutomatic",
+        "profanityFilterMode": "Masked",
+        "wordLevelTimestampsEnabled": True,
+        "diarizationEnabled": True,
+        "destinationContainerUrl": "<Your SAS URI to a the transcripts container where outputs are to be saved>", # TODO: Supply SAS URI
+        "timeToLive": "PT1H"
+    }
+    
+    # =========================================================================================
+    # CHOOSE YOUR TRANSCRIPTION METHOD
+    # =========================================================================================
+    # Use base models for transcription. Comment this block if you are using a custom model.
+    # transcription_definition = transcribe_from_single_blob(RECORDINGS_BLOB_URI, properties)
+
+    # Uncomment this block to use custom models for transcription.
+    # transcription_definition = transcribe_with_custom_model(api, RECORDINGS_BLOB_URI, properties)
+
+    # Uncomment this block to transcribe all files from a container.
+    transcription_definition = transcribe_from_container(RECORDINGS_CONTAINER_URI, properties)
+    # =========================================================================================
+
+    created_transcription, status, headers = api.create_transcription_with_http_info(
+        transcription=transcription_definition)
+
+    # get the transcription Id from the location URI
+    transcription_id = headers["location"].split("/")[-1]
+
+    # Log information about the created transcription. If you should ask for support, please
+    # include this information.
+    logging.info(
+        f"Created new transcription with id '{transcription_id}' in region {SERVICE_REGION}")
+
+    logging.info("Checking status.")
+
+    completed = False
+
+    while not completed:
+        # wait for 5 seconds before refreshing the transcription status
+        time.sleep(5)
+
+        transcription = api.get_transcription(transcription_id)
+        logging.info(f"Transcriptions status: {transcription.status}")
+
+        if transcription.status in ("Failed", "Succeeded"):
+            completed = True
+
+        if transcription.status == "Succeeded":
+            pag_files = api.get_transcription_files(transcription_id)
+            for file_data in _paginate(api, pag_files):
+                if file_data.kind != "Transcription":
+                    continue
+
+                audiofilename = file_data.name
+                results_url = file_data.links.content_url
+                results = requests.get(results_url)
+                logging.info(
+                    f"Results for {audiofilename}:\n{results.content.decode('utf-8')}")
+        elif transcription.status == "Failed":
+            logging.info(
+                f"Transcription failed: {transcription.properties.error.message}")
+
+if __name__ == "__main__":
+    transcribe()
+```
+
+5. Run each of the four cells sequentially at least once to install the libraries and register your methods. Then simply call the `transcribe()` method by running the last snippet. You should see the output in the terminal as the process runs. You should see transcriptions in your output folder ('transcripts') in Azure.
+
+### Not seeing the transcription saved in your container?
+__Note:__ If you want the transcription saved into the `transcription` container, please ensure you specify the `"destinationContainerUrl": "<SAS URI to transcriptions container>"` in the `properties = {}` object inside the `transcribe()` function.
 
 ## Resources
 
