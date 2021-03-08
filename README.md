@@ -3,6 +3,8 @@
 ## Outcome & Overview
 Referencing a Blob Storage (in Azure) containing voice recordings, we want to be able to call the [Speech to Text Cognitive Service](https://azure.microsoft.com/en-us/services/cognitive-services/speech-to-text/) in Azure to transcribe the respective recordings in parallel (batch), and save the transcript into another Blob Storage container.
 
+Adapted from: [How to use the Speech Services Batch Transcription API from Python](https://github.com/Azure-Samples/cognitive-services-speech-sdk/tree/master/samples/batch/python)
+
 ## Setup
 
 ![Azure Resources](https://i.imgur.com/juD5Z2g.png)
