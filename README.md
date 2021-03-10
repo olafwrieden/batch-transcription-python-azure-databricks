@@ -10,7 +10,10 @@ Adapted from: [How to use the Speech Services Batch Transcription API from Pytho
 ![Azure Resources](https://i.imgur.com/juD5Z2g.png)
 
 __Navigate to Azure Portal and create the following services under a common Resource Group.__
-- Storage Account (with two Blob Storage containers named `recordings` and `transcriptions` for our input and output files respectively)
+- Storage Account (with two container)
+  - Container 1: name: `recordings` access level: `Container` (for voice recording files to be transcribed)  
+    Note: We use a container access level to allow our python code to enumerate the blobs (ie. recordings) within; for batch transcription.
+  - Container 2: name: `transcriptions` access level: `Blob` (for output files)
 - Cognitive Services (Speech Service)
 - Azure Databricks Service
 
@@ -26,7 +29,7 @@ __Create a new Databricks Workspace__
 %pip install requests
 
 # Install Speech to Text API
-%pip install -e "git+https://github.com/olafwrieden/python-batch-transcription-library/#egg=subdir&subdirectory=python-client"
+%pip install -e "git+https://github.com/olafwrieden/batch-transcription-python-azure-databricks/#egg=subdir&subdirectory=python-client"
 ```
 
 2. Create a new cell underneath the above and paste the below, carefully adding the keys and URLs copied earlier, into their respective variables:
