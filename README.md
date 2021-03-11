@@ -29,7 +29,7 @@ __Create a new Databricks Workspace__
 %pip install requests
 
 # Install Speech to Text API
-%pip install -e "git+https://github.com/olafwrieden/batch-transcription-python-azure-databricks/#egg=subdir&subdirectory=python-client"
+%pip install -e "git+https://github.com/olafwrieden/batch-transcription-python-azure-databricks/#egg=swagger-client&subdirectory=python-client"
 ```
 
 2. Create a new cell underneath the above and paste the below, carefully adding the keys and URLs copied earlier, into their respective variables:
@@ -41,7 +41,7 @@ import time
 import swagger_client as cris_client
 
 # Configure Logging
-logging.basicConfig(stream=sys.stdout, level=logging.VERBOSE, format="%(asctime)s %(message)s", datefmt="%d/%m/%Y %I:%M:%S %p %Z")
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, format="%(asctime)s %(message)s", datefmt="%d/%m/%Y %I:%M:%S %p %Z")
 
 # TODO: Paste your keys and URLs into their respective variables
 
