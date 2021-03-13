@@ -14,7 +14,7 @@ __Navigate to Azure Portal and create the following services under a common Reso
   - Container 1: name: `recordings` access level: `Container` (for voice recording files to be transcribed)  
     Note: We use a container access level to allow our python code to enumerate the blobs (ie. recordings) within; for batch transcription.
   - Container 2: name: `transcriptions` access level: `Blob` (for output files)
-- Cognitive Services (Speech Service)
+- Cognitive Services (Speech Service) with S0 Tier (not Free Tier)
 - Azure Databricks Service
 
 __Collect the following details:__
