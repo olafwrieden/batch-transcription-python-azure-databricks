@@ -203,7 +203,7 @@ if __name__ == "__main__":
 __Note:__ If you want the transcription saved into the `transcription` container, please ensure you specify the `"destinationContainerUrl": "<SAS URI to transcriptions container>"` in the `properties = {}` object inside the `transcribe()` function.
 
 ## Looking for an event-driven architecture?
-I am currently working on [Event-Driven Batch Transcription](https://github.com/olafwrieden/event-driven-batch-transcription), which is focused on autonomous, event-based transcriptions when new audio files are added to a Blob storage container.
+My colleagues have created an [Event-Driven Batch Transcription](https://github.com/timleyden/speechtotextdemo) demo, which is focused on autonomous transcriptions when new audio files are added to a Blob storage container.
 
 ## Resources
 
