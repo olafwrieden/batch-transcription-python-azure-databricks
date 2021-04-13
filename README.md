@@ -202,6 +202,9 @@ if __name__ == "__main__":
 ### Not seeing the transcription saved in your container?
 __Note:__ If you want the transcription saved into the `transcription` container, please ensure you specify the `"destinationContainerUrl": "<SAS URI to transcriptions container>"` in the `properties = {}` object inside the `transcribe()` function.
 
+## Custom Models
+This demo does not show custom models, please implement the remaining Python functions [this script](https://github.com/Azure-Samples/cognitive-services-speech-sdk/blob/master/samples/batch/python/python-client/main.py) (such as `transcribe_with_custom_model`) and set the appropriate variables as described.
+
 ## Looking for an event-driven architecture?
 My colleagues have created an [Event-Driven Batch Transcription](https://github.com/timleyden/speechtotextdemo) demo, which is focused on autonomous transcriptions when new audio files are added to a Blob storage container.
 
